@@ -94,27 +94,40 @@ document.addEventListener('DOMContentLoaded', () => {
   let priceChart;
 
   if (searchInput && ctx) {
-    // Mock database of cards
-    const cardDB = [
-      { id: 1, name: 'Charizard - Base Set (Unlimited) #4', set: 'Base Set', market: '$310.50', low: '$150.00', high: '$950.00' },
-      { id: 2, name: 'Pikachu - Base Set #58', set: 'Base Set', market: '$5.20', low: '$1.00', high: '$20.00' },
-      { id: 3, name: 'Mewtwo VSTAR - Crown Zenith #GG44', set: 'Crown Zenith', market: '$45.00', low: '$38.00', high: '$60.00' },
-      { id: 4, name: 'Lugia V - Silver Tempest #186', set: 'Silver Tempest', market: '$140.00', low: '$110.00', high: '$180.00' },
-      { id: 5, name: 'Umbreon VMAX (Alternate Art) - Evolving Skies #215', set: 'Evolving Skies', market: '$600.00', low: '$450.00', high: '$800.00' },
-      { id: 6, name: 'Gengar VMAX (Alternate Art) - Fusion Strike #271', set: 'Fusion Strike', market: '$250.00', low: '$190.00', high: '$320.00' }
-    ];
+    let cardDB = [];
+    let isFetching = false;
+
+    // Show a loading message in the input
+    searchInput.placeholder = 'Loading 151 Set cards... Please wait.';
+    searchInput.disabled = true;
+
+    // Fetch the 151 Set (mew1) from the API
+    fetch('https://api.pokemontcg.io/v2/cards?q=set.id:mew1&pageSize=250')
+      .then(response => response.json())
+      .then(data => {
+        if(data && data.data) {
+          cardDB = data.data;
+          searchInput.placeholder = 'Search 151 set (e.g., Charizard)...';
+          searchInput.disabled = false;
+        }
+      })
+      .catch(err => {
+        console.error('Failed to fetch cards:', err);
+        searchInput.placeholder = 'Error loading cards.';
+      });
 
     // Handle typing in search
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase();
       searchResults.innerHTML = '';
       if (query.length > 1) {
-        const filtered = cardDB.filter(c => c.name.toLowerCase().includes(query) || c.set.toLowerCase().includes(query));
+        const filtered = cardDB.filter(c => c.name.toLowerCase().includes(query));
         if (filtered.length > 0) {
           searchResults.style.display = 'block';
-          filtered.forEach(card => {
+          // Limit to 10 results to prevent massive lists
+          filtered.slice(0, 10).forEach(card => {
             const li = document.createElement('li');
-            li.textContent = card.name;
+            li.textContent = card.name + (card.number ? ` (#${card.number})` : '');
             li.addEventListener('click', () => selectCard(card));
             searchResults.appendChild(li);
           });
@@ -136,17 +149,45 @@ document.addEventListener('DOMContentLoaded', () => {
       cardTitle.style.background = 'transparent';
       cardTitle.style.color = 'var(--color-primary)';
       
-      cardSet.textContent = card.set;
+      cardSet.textContent = card.set ? card.set.name : 'Pokémon 151';
       
       const badges = document.querySelectorAll('.badge');
+      badges[0].textContent = card.set ? card.set.name : 'Pokémon 151';
+      
+      if(badges.length > 1) {
+        badges[1].textContent = card.rarity || 'Common';
+      }
+
       badges.forEach(b => {
         b.style.background = 'var(--color-secondary)';
         b.style.color = '#fff';
       });
 
-      statMarket.textContent = card.market;
-      statLow.textContent = card.low;
-      statHigh.textContent = card.high;
+      // Update the Image
+      const cardImg = document.getElementById('selected-card-img');
+      if (card.images && card.images.large) {
+        cardImg.src = card.images.large;
+        cardImg.style.background = 'transparent'; // Remove placeholder gray
+      }
+
+      // Safe price extraction (handling missing data)
+      let marketPrice = 'N/A';
+      let lowPrice = 'N/A';
+      let highPrice = 'N/A';
+
+      if (card.tcgplayer && card.tcgplayer.prices) {
+        // Try holofoil first, then reverseHolofoil, then normal
+        const prices = card.tcgplayer.prices.holofoil || card.tcgplayer.prices.normal || card.tcgplayer.prices.reverseHolofoil;
+        if (prices) {
+          marketPrice = prices.market ? `$${prices.market.toFixed(2)}` : 'N/A';
+          lowPrice = prices.low ? `$${prices.low.toFixed(2)}` : 'N/A';
+          highPrice = prices.high ? `$${prices.high.toFixed(2)}` : 'N/A';
+        }
+      }
+
+      statMarket.textContent = marketPrice;
+      statLow.textContent = lowPrice;
+      statHigh.textContent = highPrice;
 
       const statValues = document.querySelectorAll('.stat-value');
       statValues.forEach(v => {
@@ -159,25 +200,29 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('.chart-title-placeholder').style.background = 'transparent';
       document.querySelector('.chart-title-placeholder').style.color = 'var(--color-primary)';
 
-      renderChart('1M'); // Default tab
+      // Mock chart data render (ideally this would use historical data, but the API only provides current data)
+      renderChart('1M', marketPrice !== 'N/A' ? parseFloat(marketPrice.replace('$','')) : 10); 
     };
 
-    const renderChart = (range) => {
-      // Mock data based on range
+    const renderChart = (range, basePrice = 100) => {
+      // Generate mock historical data based on the real basePrice
       let labels, data;
       if (range === '1W') {
         labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        data = [300, 305, 302, 310, 308, 315, 320];
+        data = Array.from({length: 7}, () => basePrice * (0.95 + Math.random() * 0.1));
       } else if (range === '1M') {
         labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-        data = [280, 290, 310, 320];
+        data = Array.from({length: 4}, () => basePrice * (0.90 + Math.random() * 0.2));
       } else if (range === '3M') {
         labels = ['Month 1', 'Month 2', 'Month 3'];
-        data = [250, 280, 320];
+        data = Array.from({length: 3}, () => basePrice * (0.85 + Math.random() * 0.3));
       } else if (range === '1Y') {
         labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        data = [150, 180, 200, 190, 210, 240, 260, 250, 270, 290, 310, 320];
+        data = Array.from({length: 12}, () => basePrice * (0.7 + Math.random() * 0.6));
       }
+      
+      // The last data point should end roughly around the current basePrice
+      data[data.length - 1] = basePrice;
 
       if (priceChart) {
         priceChart.destroy();
@@ -215,7 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         tabBtns.forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
-        renderChart(e.target.dataset.range);
+        // We get the current market price from the DOM to keep scaling
+        let currentPriceText = statMarket.textContent.replace('$', '');
+        let currentPrice = parseFloat(currentPriceText);
+        if (isNaN(currentPrice)) currentPrice = 100;
+
+        renderChart(e.target.dataset.range, currentPrice);
       });
     });
   }
