@@ -460,8 +460,10 @@ footer a {
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 14px;
-  height: 25px;
-  width: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .price-stats-grid {
