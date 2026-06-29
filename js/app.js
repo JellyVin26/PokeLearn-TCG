@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. Hamburger Menu ---
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
+  // --- 1. Mobile Navigation Menu ---
+  const mobileMenuIcon = document.querySelector('.hamburger');
+  const navigationMenu = document.querySelector('.nav-links');
   
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('show');
+  if (mobileMenuIcon) {
+    mobileMenuIcon.addEventListener('click', () => {
+      navigationMenu.classList.toggle('show');
     });
   }
 
