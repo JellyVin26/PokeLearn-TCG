@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.placeholder = 'Loading 151 Set cards... Please wait.';
     searchInput.disabled = true;
 
-    // Fetch the 151 Set (mew1) from the API
-    fetch('https://api.pokemontcg.io/v2/cards?q=set.id:mew1&pageSize=250')
+    // Fetch the 151 Set (sv3pt5) from the API
+    fetch('https://api.pokemontcg.io/v2/cards?q=set.id:sv3pt5&pageSize=250')
       .then(response => response.json())
       .then(data => {
         if(data && data.data) {
