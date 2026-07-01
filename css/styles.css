@@ -571,14 +571,87 @@ footer a {
   margin-top: 30px;
 }
 
-.guide-playmat-img {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+/* CSS Playmat Diagram */
+.css-playmat {
+  background: #a4bde6;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 550px;
   margin: 15px auto 25px;
-  display: block;
+  border: 3px solid #1e3a68;
+  position: relative;
+  overflow: hidden;
+}
+.css-playmat::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px; height: 250px;
+  border: 25px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.pm-zone {
+  display: flex;
+}
+.pm-prizes {
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+.pm-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  padding: 0 20px;
+}
+.pm-active {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.pm-bench {
+  gap: 10px;
+}
+.pm-right {
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pm-card {
+  width: 45px;
+  height: 65px;
+  border: 2px solid #5a7bb5;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+
+/* Step Highlights */
+.step-1-highlight .pm-prizes .pm-card,
+.step-1-highlight .pm-active .pm-card,
+.step-1-highlight .pm-bench .pm-card,
+.step-1-highlight .pm-deck {
+  background: #FFCB05;
+  border-color: #d6a800;
+  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
+}
+
+.step-2-highlight .pm-deck,
+.step-2-highlight .pm-bench .pm-card {
+  background: #FFCB05;
+  border-color: #d6a800;
+  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
+}
+
+.step-3-highlight .pm-active .pm-card,
+.step-3-highlight .pm-prizes .pm-card:first-child {
+  background: #FFCB05;
+  border-color: #d6a800;
+  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
 }
 
 /* About / FAQ */
