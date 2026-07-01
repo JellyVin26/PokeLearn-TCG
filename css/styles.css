@@ -542,8 +542,8 @@ footer a {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   margin: 40px auto;
-  width: 100%;
-  max-width: 800px;
+  width: 800px;
+  max-width: 100%;
   position: relative;
   min-height: 420px;
   display: flex;
