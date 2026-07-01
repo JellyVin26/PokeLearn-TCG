@@ -573,85 +573,185 @@ footer a {
 
 /* CSS Playmat Diagram */
 .css-playmat {
-  background: #a4bde6;
-  border-radius: 15px;
-  padding: 20px;
+  background: #a1b6e8;
+  border-radius: 12px;
+  padding: 25px;
   display: flex;
   justify-content: space-between;
-  max-width: 550px;
+  max-width: 600px;
   margin: 15px auto 25px;
-  border: 3px solid #1e3a68;
+  border: 4px solid #000;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
-.css-playmat::before {
+
+/* Pokeball Watermark */
+.pm-watermark {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  width: 280px;
+  height: 280px;
+  background: #8e9fd1;
+  border-radius: 50%;
+  z-index: -1;
+}
+.pm-watermark::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: -50px;
+  width: 380px; height: 35px;
+  background: #a1b6e8;
+  transform: translateY(-50%);
+}
+.pm-watermark::after {
   content: '';
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 250px; height: 250px;
-  border: 25px solid rgba(255,255,255,0.15);
+  width: 90px; height: 90px;
+  background: #a1b6e8;
+  border: 35px solid #8e9fd1;
   border-radius: 50%;
-  pointer-events: none;
+  box-sizing: border-box;
 }
-.pm-zone {
-  display: flex;
-}
+
+.pm-zone { display: flex; z-index: 2; }
 .pm-prizes {
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
+  position: relative;
+  width: 70px; 
+  height: 200px;
 }
+.pm-prizes .pm-card {
+  position: absolute;
+  left: 0;
+}
+.pm-prizes .pm-card:nth-child(1) { top: 0px; }
+.pm-prizes .pm-card:nth-child(2) { top: 16px; }
+.pm-prizes .pm-card:nth-child(3) { top: 32px; }
+.pm-prizes .pm-card:nth-child(4) { top: 48px; }
+.pm-prizes .pm-card:nth-child(5) { top: 64px; }
+.pm-prizes .pm-card:nth-child(6) { top: 80px; }
+
 .pm-center {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 .pm-active {
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
-.pm-bench {
-  gap: 10px;
+.pm-bench-box {
+  width: 100%;
+  max-width: 280px;
+  height: 90px;
+  border: 3px solid #000;
+  border-radius: 6px;
+  background: #a1b6e8;
 }
 .pm-right {
   flex-direction: column;
   justify-content: space-between;
 }
-.pm-card {
-  width: 45px;
-  height: 65px;
-  border: 2px solid #5a7bb5;
-  border-radius: 4px;
-  background: rgba(255,255,255,0.2);
-  transition: all 0.3s ease;
+.pm-stack {
+  position: relative;
+  width: 70px;
+  height: 105px;
 }
+.pm-stack .pm-card { position: absolute; }
+.pm-deck .pm-card:nth-child(1) { top: 0; left: 0; }
+.pm-deck .pm-card:nth-child(2) { top: -4px; left: 4px; }
+.pm-deck .pm-card:nth-child(3) { top: -8px; left: 8px; }
+.pm-deck .pm-card:nth-child(4) { top: -12px; left: 12px; }
+
+.pm-discard .pm-card:nth-child(1) { top: 0; left: 0; }
+.pm-discard .pm-card:nth-child(2) { top: 4px; left: 4px; }
+.pm-discard .pm-card:nth-child(3) { top: 8px; left: 8px; }
+
+.pm-card {
+  width: 60px;
+  height: 85px;
+  border: 2px solid #000;
+  border-radius: 6px;
+  background: #a1b6e8;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.top-prize { background: #f8fbff; }
+.pokeball-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #8e9fd1;
+  position: relative;
+}
+.top-prize .pokeball-icon { background: #b0c0de; }
+.pokeball-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: -2px; right: -2px; height: 2px;
+  background: #a1b6e8;
+  transform: translateY(-50%);
+}
+.top-prize .pokeball-icon::before { background: #f8fbff; }
+.pokeball-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  background: #a1b6e8;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.top-prize .pokeball-icon::after { background: #f8fbff; }
+
+.card-face {
+  width: 80%;
+  height: 85%;
+  border: 1px solid #8e9fd1;
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  box-sizing: border-box;
+}
+.card-img-placeholder {
+  width: 100%;
+  height: 35px;
+  background: #8e9fd1;
+  margin-bottom: 6px;
+}
+.card-text-line {
+  height: 3px;
+  background: #8e9fd1;
+  margin-bottom: 4px;
+  width: 100%;
+}
+.card-text-short { width: 50%; }
 
 /* Step Highlights */
 .step-1-highlight .pm-prizes .pm-card,
 .step-1-highlight .pm-active .pm-card,
-.step-1-highlight .pm-bench .pm-card,
-.step-1-highlight .pm-deck {
-  background: #FFCB05;
-  border-color: #d6a800;
-  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
+.step-1-highlight .pm-bench-box,
+.step-1-highlight .pm-deck .pm-card {
+  border-color: #f57f17;
+  box-shadow: 0 0 10px rgba(255, 203, 5, 0.8);
 }
-
-.step-2-highlight .pm-deck,
-.step-2-highlight .pm-bench .pm-card {
-  background: #FFCB05;
-  border-color: #d6a800;
-  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
+.step-2-highlight .pm-deck .pm-card,
+.step-2-highlight .pm-bench-box {
+  border-color: #f57f17;
+  box-shadow: 0 0 10px rgba(255, 203, 5, 0.8);
 }
-
 .step-3-highlight .pm-active .pm-card,
-.step-3-highlight .pm-prizes .pm-card:first-child {
-  background: #FFCB05;
-  border-color: #d6a800;
-  box-shadow: 0 0 8px rgba(255, 203, 5, 0.6);
+.step-3-highlight .pm-prizes .top-prize {
+  border-color: #f57f17;
+  box-shadow: 0 0 10px rgba(255, 203, 5, 0.8);
 }
 
 /* About / FAQ */
