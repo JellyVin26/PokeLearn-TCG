@@ -40,15 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('guide-next');
     let currentSlide = 0;
 
+    const updateButtons = () => {
+      if (currentSlide === slides.length - 1) {
+        nextBtn.textContent = 'Finish';
+      } else {
+        nextBtn.textContent = 'Next Step';
+      }
+    };
+
     const showSlide = (index) => {
       slides.forEach(s => s.classList.remove('active'));
       slides[index].classList.add('active');
+      updateButtons();
     };
 
     nextBtn.addEventListener('click', () => {
       if (currentSlide < slides.length - 1) {
         currentSlide++;
         showSlide(currentSlide);
+      } else {
+        window.location.href = 'index.html'; // Go home when finished
       }
     });
 
@@ -58,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(currentSlide);
       }
     });
+    
+    // Initialize buttons state on load
+    updateButtons();
   }
 
   // --- 4. FAQ Accordion (About) ---

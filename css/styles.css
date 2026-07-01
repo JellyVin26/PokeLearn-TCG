@@ -544,6 +544,10 @@ footer a {
   margin: 40px auto;
   max-width: 800px;
   position: relative;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .slide {
