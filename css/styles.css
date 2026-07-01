@@ -324,27 +324,40 @@ footer a {
 
 .card-compare {
   background: #fff;
-  padding: 20px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   text-align: center;
+}
+
+.card-compare h3 {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .card-compare img {
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: transform 0.3s;
+  max-width: 320px;
+  margin: 0 auto 25px;
+  display: block;
 }
 
-.card-compare img:hover {
-  transform: scale(1.05);
+.card-compare p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-size: 15px;
+  color: #444;
 }
 
-.card-real h3 { color: #2e7d32; }
-.card-fake h3 { color: var(--color-alert); }
+.card-compare strong {
+  color: #111;
+  font-weight: bold;
+}
+
+.card-real h3 { color: #388e3c; }
+.card-fake h3 { color: #d32f2f; }
 
 /* Price Checker */
 .search-container {
