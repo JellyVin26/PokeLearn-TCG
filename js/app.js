@@ -108,27 +108,52 @@ document.addEventListener('DOMContentLoaded', () => {
   let priceChart;
 
   if (searchInput && ctx) {
-    let cardDB = [];
-    let isFetching = false;
+    // Use mock data instead of calling the API for now
+    let cardDB = [
+      {
+        name: 'Charizard ex',
+        number: '199',
+        set: { name: 'Pokémon 151' },
+        rarity: 'Special Illustration Rare',
+        images: { large: 'https://images.pokemontcg.io/sv3pt5/199_hires.png' },
+        tcgplayer: { prices: { holofoil: { market: 115.50, low: 95.00, high: 140.00 } } }
+      },
+      {
+        name: 'Blastoise ex',
+        number: '200',
+        set: { name: 'Pokémon 151' },
+        rarity: 'Special Illustration Rare',
+        images: { large: 'https://images.pokemontcg.io/sv3pt5/200_hires.png' },
+        tcgplayer: { prices: { holofoil: { market: 45.20, low: 40.00, high: 55.00 } } }
+      },
+      {
+        name: 'Venusaur ex',
+        number: '198',
+        set: { name: 'Pokémon 151' },
+        rarity: 'Special Illustration Rare',
+        images: { large: 'https://images.pokemontcg.io/sv3pt5/198_hires.png' },
+        tcgplayer: { prices: { holofoil: { market: 42.10, low: 38.00, high: 50.00 } } }
+      },
+      {
+        name: 'Pikachu',
+        number: '173',
+        set: { name: 'Pokémon 151' },
+        rarity: 'Illustration Rare',
+        images: { large: 'https://images.pokemontcg.io/sv3pt5/173_hires.png' },
+        tcgplayer: { prices: { normal: { market: 18.50, low: 15.00, high: 25.00 } } }
+      },
+      {
+        name: 'Alakazam ex',
+        number: '201',
+        set: { name: 'Pokémon 151' },
+        rarity: 'Special Illustration Rare',
+        images: { large: 'https://images.pokemontcg.io/sv3pt5/201_hires.png' },
+        tcgplayer: { prices: { holofoil: { market: 32.40, low: 28.00, high: 40.00 } } }
+      }
+    ];
 
-    // Show a loading message in the input
-    searchInput.placeholder = 'Loading 151 Set cards... Please wait.';
-    searchInput.disabled = true;
-
-    // Fetch the 151 Set (sv3pt5) from the API
-    fetch('https://api.pokemontcg.io/v2/cards?q=set.id:sv3pt5&pageSize=250')
-      .then(response => response.json())
-      .then(data => {
-        if(data && data.data) {
-          cardDB = data.data;
-          searchInput.placeholder = 'Search 151 set (e.g., Charizard)...';
-          searchInput.disabled = false;
-        }
-      })
-      .catch(err => {
-        console.error('Failed to fetch cards:', err);
-        searchInput.placeholder = 'Error loading cards.';
-      });
+    searchInput.placeholder = 'Search mock data (e.g., Charizard)...';
+    searchInput.disabled = false;
 
     // Handle typing in search
     searchInput.addEventListener('input', (e) => {
