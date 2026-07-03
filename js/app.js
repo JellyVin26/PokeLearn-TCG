@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     ];
 
-    searchInput.placeholder = 'Search mock data (e.g., Charizard)...';
+    searchInput.placeholder = 'Search (e.g., Charizard)...';
     searchInput.disabled = false;
 
     // Handle typing in search
