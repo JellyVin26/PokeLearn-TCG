@@ -1,14 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. Mobile Navigation Menu ---
-  const mobileMenuIcon = document.querySelector('.hamburger');
-  const navigationMenu = document.querySelector('.nav-links');
-  
-  if (mobileMenuIcon) {
-    mobileMenuIcon.addEventListener('click', () => {
-      navigationMenu.classList.toggle('show');
-    });
-  }
 
   // --- 2. Carousel Logic (Homepage) ---
   const carouselSlide = document.getElementById('news-carousel');
@@ -108,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let priceChart;
 
   if (searchInput && ctx) {
-    // Use mock data instead of calling the API for now
+    // Use mock data
     let cardDB = [
       {
         name: 'Charizard ex',
