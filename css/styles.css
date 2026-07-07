@@ -6,8 +6,8 @@
   --color-bg: #FFFFFF; /* White */
   --color-alert: #D32F2F; /* Warning Red */
   
-  --font-heading: 'Apercu', 'Inter', 'Roboto', sans-serif;
-  --font-body: 'FF Tisa Web Pro', 'Lora', 'Georgia', serif;
+  --font-heading: 'Outfit', 'Inter', 'Roboto', sans-serif;
+  --font-body: 'Inter', 'Roboto', 'Outfit', sans-serif;
 
   --transition: all 0.3s ease;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
